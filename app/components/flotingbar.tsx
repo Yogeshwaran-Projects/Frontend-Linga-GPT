@@ -1,9 +1,8 @@
-"use client";
-
 import React from 'react';
 import { IconHome, IconMessage, IconUser } from '@tabler/icons-react';
 import { FloatingNav } from '@/components/ui/floating-navbar';
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 export function FloatingNavDemo() {
   const navItems = [
@@ -22,27 +21,31 @@ export function FloatingNavDemo() {
       link: '/contact',
       icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
+    {
+      name: 'Get Started',
+      link: '/getai',
+      icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
   ];
 
   return (
-    <ClerkProvider>
-      <div className="relative w-full bg-black">
-        <FloatingNav navItems={navItems} />
-        <SignedOut>
-          <CustomSignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </div>
-    </ClerkProvider>
+    <div className="relative w-full bg-black">
+      <FloatingNav navItems={navItems} />
+      <SignedOut>
+        <CustomSignInButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </div>
   );
 }
 
 function CustomSignInButton() {
+  const router = useRouter();
+
   const handleSignIn = () => {
-    const signInUrl = `https://wanted-ewe-27.accounts.dev/sign-in?redirect_url=http://localhost:4321/`;
-    window.location.href = signInUrl;
+    router.push('/sign-in'); // Redirect to your sign-in page
   };
 
   return (
